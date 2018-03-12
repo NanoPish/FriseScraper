@@ -1,10 +1,13 @@
 import requests 
 from xml.etree import ElementTree
 
-import event from event
+from historical_event import historical_event
 
 class vizgr_api_wrapper:
-    url_endpoint = "http://www.vizgr.org/historical-events/search.php"
+    url_endpoint = 'http://www.vizgr.org/historical-events/search.php'
+    source_name = 'wikipedia'
+    
+    
     def __init__(self):
         self.query_result = None
 
@@ -32,5 +35,6 @@ class vizgr_api_wrapper:
         event_list = []
         tree = ElementTree.fromstring(self.query_result.content)
         for event in tree.findall('event'):
-            event_list.append(event.find('description').text, event(event.find('date').text), None, None, self.source_name)
+            current_event = historical_event(event.find('description').text, event.find('date').text, None, None, self.source_name)
+            event_list.append(current_event)
         return (event_list)
