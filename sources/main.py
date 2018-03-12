@@ -7,5 +7,5 @@ if __name__ == '__main__':
     wikipedia.make_query('19900000', '19900200')
     wikipedia_events = wikipedia.get_event_list()
     for event in wikipedia_events:
-        print(event)
+        print(event, '\n')
     
