@@ -1,7 +1,9 @@
-import requests
+import requests 
 from xml.etree import ElementTree
 
-class query_wrapper:
+import event from event
+
+class vizgr_api_wrapper:
     url_endpoint = "http://www.vizgr.org/historical-events/search.php"
     def __init__(self):
         self.query_result = None
@@ -23,14 +25,12 @@ class query_wrapper:
             query_dict['limit'] = limit
         if category is not None:
             query_dict['category'] = category
-        self.query_result = requests.get(query_wrapper.url_endpoint, params=query_dict)
+        self.query_result = requests.get(vizgr_api_wrapper.url_endpoint, params=query_dict)
 
         
-    def print_query_result(self):
+    def get_event_list(self):
+        event_list = []
         tree = ElementTree.fromstring(self.query_result.content)
         for event in tree.findall('event'):
-            for link in event.findall('link'):
-                print(link.find('text_in_event').text)
-                print(link.find('url').text)
-            print(event.find('date').text + " " + event.find('description').text)
-            print('------')
+            event_list.append(event.find('description').text, event(event.find('date').text), None, None, self.source_name)
+        return (event_list)
