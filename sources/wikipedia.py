@@ -6,12 +6,10 @@ from historical_event import historical_event
 class vizgr_api_wrapper:
     url_endpoint = 'http://www.vizgr.org/historical-events/search.php'
     source_name = 'wikipedia'
-    
-    
+        
     def __init__(self):
         self.query_result = None
-
-        
+    
     def make_query(self, begin_date, end_date, lang='en', keyword=None, format='xml', html_link='false', links='true', limit=None, order='asc', category=None, granularity='year', related='false'):
         query_dict = {
             'begin_date':begin_date,
@@ -29,12 +27,13 @@ class vizgr_api_wrapper:
         if category is not None:
             query_dict['category'] = category
         self.query_result = requests.get(vizgr_api_wrapper.url_endpoint, params=query_dict)
-
         
     def get_event_list(self):
         event_list = []
         tree = ElementTree.fromstring(self.query_result.content)
         for event in tree.findall('event'):
-            current_event = historical_event(event.find('description').text, event.find('date').text, None, None, self.source_name)
+            current_event = historical_event(description=event.find('description').text,
+                                             date=event.find('date').text,
+                                             source=self.source_name)
             event_list.append(current_event)
         return (event_list)
