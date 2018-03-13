@@ -2,6 +2,7 @@ import pymysql
 
 class mysql_database:
     def __init__(self):
+        self.db_name = 'lafrise'
         try:
             self.cnx = pymysql.connect(user='lafrise',
                                        password='lafrise',
@@ -11,14 +12,11 @@ class mysql_database:
                                        cursorclass=pymysql.cursors.DictCursor)
         except pymysql.InternalError as error:
             code, message = error.args
-            print(">>>>>>>>>>>>>", code, message)
+            print('>>>>>>>>>>>>>', code, message)
         self.cur = self.cnx.cursor()
-
+        
     def query(self, query, params):
         return self.cur.execute(query, params)
-
-    def commit(self):
-        self.cnx.commit()
 
     def __del__(self):
         self.cnx.close()
