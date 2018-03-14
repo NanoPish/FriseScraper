@@ -14,4 +14,5 @@ if __name__ == '__main__':
                               '(date, description, source) '
                               'VALUES (%s, %s, %s)')
         database.query(insert_event_query, (event.date, event.description, event.source))
+        print(len(event.description))
     database.cnx.commit()
