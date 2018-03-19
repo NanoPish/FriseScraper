@@ -13,9 +13,7 @@ class league_of_legends:
         self.query_result = None
 
     def make_query(self):
-        query_dict = {
-            'token' : 'lvyy4BTBrK_e3Xt2WLxi-KpFYq448BwPrRyweHHm2cYg_BDYqGE'
-        }
+        query_dict = {'token' : 'lvyy4BTBrK_e3Xt2WLxi-KpFYq448BwPrRyweHHm2cYg_BDYqGE'}
         self.query_result = requests.get(league_of_legends.url_endpoint, params=query_dict)
         #for event in events:
         #   print(event.name)

@@ -16,14 +16,13 @@ def insert_events(events):
     database.cnx.commit()
     
 if __name__ == '__main__':
-    
-    # french_historical = french_historical()
-    # french_historical_links = french_historical.get_event_links()
-    # events_french_historical = french_historical.get_event_list(french_historical.scrap(french_historical_links))
+    french_historical = french_historical()
+    french_historical_links = french_historical.get_event_links()
+    events_french_historical = french_historical.get_event_list(french_historical.scrap(french_historical_links))
 
-    # leagueOfLegends = league_of_legends()
-    # leagueOfLegends.make_query()
-    # events_league = leagueOfLegends.get_event_list()
+    leagueOfLegends = league_of_legends()
+    leagueOfLegends.make_query()
+    events_league = leagueOfLegends.get_event_list()
 
 
     #example querying all events between 1990 and 1992 from wikipedia using vizgr api

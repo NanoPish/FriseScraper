@@ -21,27 +21,29 @@ class french_historical:
         links_event = browser.find_elements_by_xpath('//td[@class="titreliste"]//a')
         for link in links_event:
             self.event_links.append(link.get_attribute('href'))
+        browser.quit()
         return(self.event_links)
 
     def scrap(self, links):
-         options = webdriver.ChromeOptions()
-         options.add_argument('--incognito')
-         browser = webdriver.Chrome('/usr/local/bin/chromedriver', chrome_options=options)
+        options = webdriver.ChromeOptions()
+        options.add_argument('--incognito')
+        browser = webdriver.Chrome('/usr/local/bin/chromedriver', chrome_options=options)
 
-         for link in links:
-             browser.get(link)
+        for link in links:
+            browser.get(link)
 
-             titles = browser.find_elements_by_xpath('//div[@id="rub"]//tr//td//div[@class="titre"]')
-             title = [titlex.text for titlex in titles] 
+            titles = browser.find_elements_by_xpath('//div[@id="rub"]//tr//td//div[@class="titre"]')
+            title = [titlex.text for titlex in titles] 
             
-             date = title[0].split(" ")[5]
-             stories = browser.find_elements_by_xpath('//tr[@valign="top"]//td//div//table//tbody//tr//td//div//p')
-             story = [storyx.text for storyx in stories]
+            date = title[0].split(" ")[5]
+            stories = browser.find_elements_by_xpath('//tr[@valign="top"]//td//div//table//tbody//tr//td//div//p')
+            story = [storyx.text for storyx in stories]
              
-             current_event = historical_event(date, story[0].encode('utf-8'), None, title[0].encode('utf-8'), link)
-             self.event_list.append(current_event)
-         return (self.event_list)
-    
+            current_event = historical_event(date, story[0].encode('utf-8'), None, title[0].encode('utf-8'), link)
+            self.event_list.append(current_event)
+            
+        browser.quit()
+        return (self.event_list)
 
     def get_event_list(self, event_list):
         return (event_list)
