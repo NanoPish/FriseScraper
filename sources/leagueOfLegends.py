@@ -32,13 +32,3 @@ class league_of_legends:
             current_event = historical_event(event.begin_at, None, 'https://pandascore.co/', event.name, None)
             event_list.append(current_event)
         return (event_list)
-
-    def add_to_db(self, events):
-        database = mysql_database()
-        for event in events:
-            print('Trying to insert event: \n', event, '\n')
-            insert_event_query = ('INSERT INTO events'
-                                  '(date, source, name) '
-                                  'VALUES (%s, %s, %s)')
-            database.query(insert_event_query, (event.date, event.source, event.name))
-        database.cnx.commit()

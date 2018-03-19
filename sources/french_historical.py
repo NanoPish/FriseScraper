@@ -45,14 +45,3 @@ class french_historical:
 
     def get_event_list(self, event_list):
         return (event_list)
-
-    def add_to_db(self, events):
-        database = mysql_database()
-        for event in events:
-            print('Trying to insert event : \n', event, '\n')
-            insert_event_query = ('INSERT INTO events '
-                                  '(date, description, url, name) '
-                                  'VALUES (%s, %s, %s, %s)')
-            database.query(insert_event_query, (event.date, event.description, event.url, event.name))
-            #print(len(event.description))
-        database.cnx.commit()
