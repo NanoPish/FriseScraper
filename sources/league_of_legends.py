@@ -7,20 +7,19 @@ from historical_event import historical_event
 from mysql_database import mysql_database
 from harvester import harvester
 
-class league_of_legends:
+class league_of_legends(harvester):
     url_endpoint = 'https://api.pandascore.co/videogames/1/tournaments'
 
     def __init__(self):
-        self.source = 'pandaLOL'
-    
-    def __init__(self):
         self.query_result = None
         self.event_list = []
-        
+        self.source = 'pandaLOL'
+
     def harvest(self):
         query_dict = {'token' : 'lvyy4BTBrK_e3Xt2WLxi-KpFYq448BwPrRyweHHm2cYg_BDYqGE'}
         self.query_result = requests.get(league_of_legends.url_endpoint, params=query_dict)
-
+        self.make_event_list()
+        
     def make_event_list(self):
         self.event_list = []
         events = json.loads(self.query_result.content, object_hook=lambda d: namedtuple('x', d.keys())(*d.values()))
