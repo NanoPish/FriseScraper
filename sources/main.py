@@ -1,9 +1,9 @@
-from wikipedia import vizgr_api_wrapper
 from historical_event import historical_event
 from mysql_database import mysql_database
 
-from leagueOfLegends import league_of_legends
+from league_of_legends import league_of_legends
 from french_historical import french_historical
+from wikipedia import vizgr_api_wrapper
 
 def insert_events(events):
     database = mysql_database()
@@ -17,17 +17,17 @@ def insert_events(events):
     
 if __name__ == '__main__':
     french_historical = french_historical()
-    french_historical_links = french_historical.get_event_links()
-    events_french_historical = french_historical.get_event_list(french_historical.scrap(french_historical_links))
+    french_historical.harvest()
 
-    leagueOfLegends = league_of_legends()
-    leagueOfLegends.make_query()
-    events_league = leagueOfLegends.get_event_list()
-
-
+    league_of_legends = league_of_legends()
+    league_of_legends.harvest()
+    
     #example querying all events between 1990 and 1992 from wikipedia using vizgr api
     wikipedia = vizgr_api_wrapper()
-    wikipedia.make_query(begin_date='19900000', end_date='19900200')
-    wikipedia_events = wikipedia.get_event_list()
-    insert_events(wikipedia_events)
+    wikipedia.harvest()
+
+    # save all events in DB
+    insert_events(french_historical.event_list)
+    insert_events(league_of_legends.event_list)
+    insert_events(wikipedia.event_list)
 

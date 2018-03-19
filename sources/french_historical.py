@@ -6,15 +6,18 @@ from selenium.common.exceptions import TimeoutException
 from mysql_database import mysql_database
 
 from historical_event import historical_event
+from harvester import harvester
 
-class french_historical:
+class french_historical(harvester):
     def __init__(self):
         self.event_links = []
         self.event_list = []
-
+        self.source = 'france-pittoresque'
+        
     def get_event_links(self):
         options = webdriver.ChromeOptions()
         options.add_argument('--incognito')
+        options.add_argument('headless')
         browser = webdriver.Chrome('/usr/local/bin/chromedriver', chrome_options=options)
         browser.get('https://www.france-pittoresque.com/spip.php?rubrique12')
 
@@ -22,14 +25,15 @@ class french_historical:
         for link in links_event:
             self.event_links.append(link.get_attribute('href'))
         browser.quit()
-        return(self.event_links)
 
-    def scrap(self, links):
+    def harvest(self):
+        self.get_event_links()
         options = webdriver.ChromeOptions()
         options.add_argument('--incognito')
+        options.add_argument('headless')
         browser = webdriver.Chrome('/usr/local/bin/chromedriver', chrome_options=options)
 
-        for link in links:
+        for link in self.event_links:
             browser.get(link)
 
             titles = browser.find_elements_by_xpath('//div[@id="rub"]//tr//td//div[@class="titre"]')
@@ -39,11 +43,7 @@ class french_historical:
             stories = browser.find_elements_by_xpath('//tr[@valign="top"]//td//div//table//tbody//tr//td//div//p')
             story = [storyx.text for storyx in stories]
              
-            current_event = historical_event(date, story[0].encode('utf-8'), None, title[0].encode('utf-8'), link)
+            current_event = historical_event(date, story[0].encode('utf-8'), self.source, title[0].encode('utf-8'), link)
             self.event_list.append(current_event)
             
         browser.quit()
-        return (self.event_list)
-
-    def get_event_list(self, event_list):
-        return (event_list)
