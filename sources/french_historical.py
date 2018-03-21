@@ -8,6 +8,8 @@ from mysql_database import mysql_database
 from historical_event import historical_event
 from harvester import harvester
 
+import logging
+
 class french_historical(harvester):
     def __init__(self):
         self.event_links = []
@@ -34,7 +36,7 @@ class french_historical(harvester):
         options.add_argument('headless')
         browser = webdriver.Chrome('/usr/local/bin/chromedriver', chrome_options=options)
 
-        logging.info('Parsing league_of_legends results...')
+        logging.info('Parsing french_historical results...')
         for link in self.event_links:
             browser.get(link)
 

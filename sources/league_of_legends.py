@@ -7,6 +7,8 @@ from historical_event import historical_event
 from mysql_database import mysql_database
 from harvester import harvester
 
+import logging
+
 class league_of_legends(harvester):
     url_endpoint = 'https://api.pandascore.co/videogames/1/tournaments'
 
