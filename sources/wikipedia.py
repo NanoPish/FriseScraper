@@ -38,7 +38,7 @@ class vizgr_api_wrapper(harvester):
                                              date=event.find('date').text,
                                              source=self.source_name)
             if ('/' not in current_event.date):
-                current_event.date = current_event.date + '/00/00'
+                current_event.date = current_event.date + '/01/01'
             self.event_list.append(current_event)
 
         
