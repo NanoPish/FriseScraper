@@ -16,7 +16,7 @@ class vizgr_api_wrapper(harvester):
         
     def harvest(self):
         query_dict = {
-            'begin_date':'1000' + '10' + '10',
+            'begin_date':'0001' + '01' + '01',
             'end_date':  '2020' + '01' + '01',
             'lang':'en',
             'format':'xml',

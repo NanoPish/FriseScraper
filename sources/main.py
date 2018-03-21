@@ -1,27 +1,43 @@
-from wikipedia import vizgr_api_wrapper
-from pandascore import pandascore_dota_api
 from historical_event import historical_event
 from mysql_database import mysql_database
 
-if __name__ == '__main__':
-    #example querying all events between 1990 and 1992 from wikipedia using vizgr api
-    wikipedia = vizgr_api_wrapper()
-    pandascore = pandascore_dota_api()
-    pandascore.make_query()
-    pandascore_events = pandascore.get_event_list()
-    wikipedia.make_query(begin_date='19900000', end_date='19900200')
-    wikipedia_events = wikipedia.get_event_list()
+from league_of_legends import league_of_legends
+from french_historical import french_historical
+from wikipedia import vizgr_api_wrapper
+
+import logging
+
+def insert_events(events):
+    logging.info('Inserting events in database...')
     database = mysql_database()
-    for event in wikipedia_events:
-        print('Trying to insert event: \n', event, '\n')
-        insert_event_query = ('INSERT INTO events '
-                              '(date, description, source) '
-                              'VALUES (%s, %s, %s)')
-        database.query(insert_event_query, (event.date, event.description, event.source))
-    for event in pandascore_events:
-        print('Trying to insert event: \n', event, '\n')
-        insert_event_query = ('INSERT INTO events '
-                              '(date, description, source) '
-                              'VALUES (%s, %s, %s)')
-        database.query(insert_event_query, (event.date, event.description, event.source))
+    for event in events:
+        if (event.description != None and
+            event.source != None and
+            event.date != None):
+            insert_event_query = ('INSERT INTO events '
+                             '(name, description, url, source, date) '
+                             'VALUES (%s, %s, %s, %s, %s)')
+            database.query(insert_event_query, (event.name, event.description, event.url, event.source, event.date))
+        else:
+            logging.warn("Missing required event property, can't insert event in database: " + event.__str__())
     database.cnx.commit()
+    
+if __name__ == '__main__':
+    logging.basicConfig(filename='LaFrise.log', level=logging.INFO)
+    logging.info('Started FriseScraper')
+    
+    #french_historical = french_historical()
+    #french_historical.harvest()
+
+    #league_of_legends = league_of_legends()
+    #league_of_legends.harvest()
+    
+    wikipedia = vizgr_api_wrapper()
+    wikipedia.harvest()
+
+    # save all events in DB
+    #insert_events(french_historical.event_list)
+    #insert_events(league_of_legends.event_list)
+    insert_events(wikipedia.event_list)
+    
+    logging.info('Exiting FriseScraper')

@@ -10,3 +10,8 @@ Data gathering engine that harvests and save data from APIs and websites to feed
 ## Usage
 
 * python sources/main.py
+
+## More
+
+* LaFrise.log contains program logs
+* delete.sql removes all LaFrise related users / db / table from local mysql if used
