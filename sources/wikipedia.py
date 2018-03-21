@@ -14,11 +14,12 @@ class vizgr_api_wrapper(harvester):
         
     def harvest(self):
         query_dict = {
-            'begin_date':'20100000',
-            'end_date':'20200000',
+            'begin_date':'0900' + '00' + '00',
+            'end_date':  '0901' + '00' + '00',
+            'lang':'en',
             'format':'xml',
-            'html_link':'false',
-            'links':'true',
+            'html':'false',
+            'links':'false',
             'order':'asc',
             'related':'false'
         }
@@ -32,4 +33,8 @@ class vizgr_api_wrapper(harvester):
             current_event = historical_event(description=event.find('description').text,
                                              date=event.find('date').text,
                                              source=self.source_name)
+            if ('/' not in current_event.date):
+                current_event.date = current_event.date + '/00/00'
             self.event_list.append(current_event)
+
+        
