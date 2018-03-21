@@ -26,18 +26,18 @@ if __name__ == '__main__':
     logging.basicConfig(filename='LaFrise.log', level=logging.INFO)
     logging.info('Started FriseScraper')
     
-    french_historical = french_historical()
-    french_historical.harvest()
+    #french_historical = french_historical()
+    #french_historical.harvest()
 
-    league_of_legends = league_of_legends()
-    league_of_legends.harvest()
+    #league_of_legends = league_of_legends()
+    #league_of_legends.harvest()
     
     wikipedia = vizgr_api_wrapper()
     wikipedia.harvest()
 
     # save all events in DB
-    insert_events(french_historical.event_list)
-    insert_events(league_of_legends.event_list)
+    #insert_events(french_historical.event_list)
+    #insert_events(league_of_legends.event_list)
     insert_events(wikipedia.event_list)
     
     logging.info('Exiting FriseScraper')
