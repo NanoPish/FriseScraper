@@ -16,11 +16,13 @@ class league_of_legends(harvester):
         self.source = 'pandaLOL'
 
     def harvest(self):
+        logging.info('Making api call in league_of_legends...')
         query_dict = {'token' : 'lvyy4BTBrK_e3Xt2WLxi-KpFYq448BwPrRyweHHm2cYg_BDYqGE'}
         self.query_result = requests.get(league_of_legends.url_endpoint, params=query_dict)
         self.make_event_list()
         
     def make_event_list(self):
+        logging.info('Parsing league_of_legends results...')
         self.event_list = []
         events = json.loads(self.query_result.content, object_hook=lambda d: namedtuple('x', d.keys())(*d.values()))
         for event in events:

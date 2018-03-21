@@ -31,7 +31,7 @@ class vizgr_api_wrapper(harvester):
         
     def make_event_list(self):
         self.event_list = []
-        logging.info('Parsing Wikipedia results...')
+        logging.info('Parsing wikipedia results...')
         tree = ElementTree.fromstring(self.query_result.content)
         for event in tree.findall('event'):
             current_event = historical_event(description=event.find('description').text,

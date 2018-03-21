@@ -27,12 +27,14 @@ class french_historical(harvester):
         browser.quit()
 
     def harvest(self):
+        logging.info('Making api call in french_historical...')
         self.get_event_links()
         options = webdriver.ChromeOptions()
         options.add_argument('--incognito')
         options.add_argument('headless')
         browser = webdriver.Chrome('/usr/local/bin/chromedriver', chrome_options=options)
 
+        logging.info('Parsing league_of_legends results...')
         for link in self.event_links:
             browser.get(link)
 
