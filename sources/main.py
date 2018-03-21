@@ -14,6 +14,7 @@ def insert_events(events):
         if (event.description != None and
             event.source != None and
             event.date != None):
+            event.date = event.date.replace('/', '-')
             insert_event_query = ('INSERT INTO events '
                              '(name, description, url, source, date) '
                              'VALUES (%s, %s, %s, %s, %s)')
