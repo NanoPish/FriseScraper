@@ -8,6 +8,7 @@ from wikipedia import vizgr_api_wrapper
 import logging
 
 def insert_events(events):
+    logging.info('Inserting events in database...')
     database = mysql_database()
     for event in events:
         if (event.description != None and
@@ -23,19 +24,20 @@ def insert_events(events):
     
 if __name__ == '__main__':
     logging.basicConfig(filename='LaFrise.log', level=logging.INFO)
-    logging.info('Started')
-    # french_historical = french_historical()
-    # french_historical.harvest()
-
-    # league_of_legends = league_of_legends()
-    # league_of_legends.harvest()
+    logging.info('Started FriseScraper')
     
-    #example querying all events between 1990 and 1992 from wikipedia using vizgr api
+    french_historical = french_historical()
+    french_historical.harvest()
+
+    league_of_legends = league_of_legends()
+    league_of_legends.harvest()
+    
     wikipedia = vizgr_api_wrapper()
     wikipedia.harvest()
 
     # save all events in DB
-    # insert_events(french_historical.event_list)
-    # insert_events(league_of_legends.event_list)
+    insert_events(french_historical.event_list)
+    insert_events(league_of_legends.event_list)
     insert_events(wikipedia.event_list)
-    logging.info('Finished')
+    
+    logging.info('Exiting FriseScraper')

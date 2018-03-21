@@ -4,6 +4,8 @@ from xml.etree import ElementTree
 from historical_event import historical_event
 from harvester import harvester
 
+import logging
+
 class vizgr_api_wrapper(harvester):
     url_endpoint = 'http://www.vizgr.org/historical-events/search.php'
     source_name = 'wikipedia'
@@ -14,8 +16,8 @@ class vizgr_api_wrapper(harvester):
         
     def harvest(self):
         query_dict = {
-            'begin_date':'0900' + '00' + '00',
-            'end_date':  '0901' + '00' + '00',
+            'begin_date':'0000' + '00' + '00',
+            'end_date':  '2020' + '00' + '00',
             'lang':'en',
             'format':'xml',
             'html':'false',
@@ -23,11 +25,13 @@ class vizgr_api_wrapper(harvester):
             'order':'asc',
             'related':'false'
         }
+        logging.info('Making api call in wikipedia...')
         self.query_result = requests.get(vizgr_api_wrapper.url_endpoint, params=query_dict)
         self.make_event_list()
         
     def make_event_list(self):
         self.event_list = []
+        logging.info('Parsing Wikipedia results...')
         tree = ElementTree.fromstring(self.query_result.content)
         for event in tree.findall('event'):
             current_event = historical_event(description=event.find('description').text,
