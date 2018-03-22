@@ -21,6 +21,8 @@ class league_of_legends(harvester):
         logging.info('Making api call in league_of_legends...')
         query_dict = {'token' : 'lvyy4BTBrK_e3Xt2WLxi-KpFYq448BwPrRyweHHm2cYg_BDYqGE'}
         self.query_result = requests.get(league_of_legends.url_endpoint, params=query_dict)
+        print(self.query_result)
+        print(self.query_result.content)
         self.make_event_list()
         
     def make_event_list(self):

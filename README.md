@@ -5,7 +5,7 @@ Data gathering engine that harvests and save data from APIs and websites to feed
 ## Installation
 
 * Init sql user / db / table using `mysql -u root -p < init.sql` in the FriseScraper main dir
-* Install pymysql and requests using pip install in a virtualenv
+* Install the following dependencies using pip install in a virtualenv (selenium pymysql requests python-dateutil)
 
 ## Usage
 
@@ -15,3 +15,10 @@ Data gathering engine that harvests and save data from APIs and websites to feed
 
 * LaFrise.log contains program logs
 * delete.sql removes all LaFrise related users / db / table from local mysql if used
+
+# virtualenv how-to
+
+* pip install virtualenv
+* cd
+* virtualenv LaFrise -p python3
+* source ~/LaFrise/bin/activate
