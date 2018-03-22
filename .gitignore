@@ -1,3 +1,4 @@
 sources/__pycache__
 sources/*.pyc
 *.log
+sources/*.log
