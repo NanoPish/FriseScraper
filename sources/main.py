@@ -36,13 +36,13 @@ if __name__ == '__main__':
     wikipedia = vizgr_api_wrapper()
     wikipedia.harvest()
 
-    pandascore_dota_api = pandascore_dota_api()
-    pandascore_dota_api.harvest()
+    #pandascore_dota_api = pandascore_dota_api()
+    #pandascore_dota_api.harvest()
 
     # save all events in DB
     #insert_events(french_historical.event_list)
     #insert_events(league_of_legends.event_list)
     insert_events(wikipedia.event_list)
-    insert_events(pandascore_dota_api.event_list)
+    #insert_events(pandascore_dota_api.event_list)
     
     logging.info('Exiting FriseScraper')
